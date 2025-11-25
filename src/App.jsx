@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { PackedSplats, SplatMesh, SplatFileType } from "@sparkjsdev/spark";
 
-import AquariumSplatUrl from '../data/aquarium_world.ply?url';
+import AquariumSplatUrl from '../data/aquarium_world.ply';
 
 function App() {
 
@@ -32,6 +32,9 @@ function App() {
 
     // 3. SPLAT LOADING (The Logic Fix)
     // We instantiate PackedSplats directly. The library usually handles the fetch internally.
+    console.log('Splat URL:', AquariumSplatUrl);
+    const cleanUrl = AquariumSplatUrl.split('?')[0];
+    console.log('Clean Splat URL:', cleanUrl);
     const packedSplats = new PackedSplats({ url: AquariumSplatUrl, fileType: SplatFileType.PLY });
 
     // We pass the specific key 'packedSplats' that the library expects
@@ -52,6 +55,7 @@ function App() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
     };
     window.addEventListener('resize', onWindowResize);
 
